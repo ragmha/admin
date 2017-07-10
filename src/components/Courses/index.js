@@ -21,7 +21,7 @@ class Courses extends Component {
   }
 
   onClickSave() {
-    this.props.dispatch(courseActions.createCourse(this.state.course));
+    this.props.createCourse(this.state.course);
   }
 
   courseRow(course, index) {
@@ -33,7 +33,6 @@ class Courses extends Component {
   }
 
   render() {
-    debugger;
     return (
       <div>
         <h1>Courses</h1>
@@ -51,16 +50,21 @@ class Courses extends Component {
 }
 
 Courses.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  createCourse: PropTypes.func.isRequired,
   courses: PropTypes.array.isRequired
 };
 
 // state is within our redux store
 function mapStateToProps(state, ownProps) {
-  debugger;
   return {
     courses: state.courses // this is named in the reducer
   };
 }
 
-export default connect(mapStateToProps)(Courses);
+function mapDispatchToProps(dispatch) {
+  return {
+    createCourse: course => dispatch(courseActions.createCourse(course))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Courses);
