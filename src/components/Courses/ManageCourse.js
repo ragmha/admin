@@ -17,6 +17,12 @@ class ManageCourse extends Component {
     this.saveCourse = this.saveCourse.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.course.id != nextProps.course.id) {
+      this.setState({ course: Object.assign({}, nextProps.course) });
+    }
+  }
+
   updateCourseState(event) {
     const field = event.target.name;
     let course = this.state.course;
@@ -44,7 +50,6 @@ class ManageCourse extends Component {
 }
 
 function getCourseById(courses, id) {
-  debugger;
   const course = courses.filter(course => course.id == id);
   if (course.length) return course[0];
   return null;
