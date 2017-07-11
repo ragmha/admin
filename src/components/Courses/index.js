@@ -9,14 +9,6 @@ class Courses extends Component {
     super(props, context);
   }
 
-  courseRow(course, index) {
-    return (
-      <div key={index}>
-        {course.title}
-      </div>
-    );
-  }
-
   render() {
     const { courses } = this.props;
 
