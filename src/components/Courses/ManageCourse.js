@@ -9,11 +9,12 @@ class ManageCourse extends Component {
     super(props);
 
     this.state = {
-      course: Object.assign({}, this.props.course),
+      course: Object.assign({}, props.course),
       errors: {}
     };
 
     this.updateCourseState = this.updateCourseState.bind(this);
+    this.saveCourse = this.saveCourse.bind(this);
   }
 
   updateCourseState(event) {
@@ -23,11 +24,18 @@ class ManageCourse extends Component {
     return this.setState({ course: course });
   }
 
+  saveCourse(event) {
+    event.preventDefault();
+    this.props.actions.saveCourse(this.state.course);
+    this.context.router.push("/courses");
+  }
+
   render() {
     return (
       <CourseForm
         allAuthors={this.props.authors}
         onChange={this.updateCourseState}
+        onSave={this.saveCourse}
         course={this.state.course}
         errors={this.state.errors}
       />
@@ -35,7 +43,17 @@ class ManageCourse extends Component {
   }
 }
 
+function getCourseById(courses, id) {
+  debugger;
+  const course = courses.filter(course => course.id == id);
+  if (course.length) return course[0];
+  return null;
+}
+
+// ownProps reference to components props
 function mapStateToProps(state, ownProps) {
+  const courseId = ownProps.params.id;
+
   let course = {
     id: "",
     watchHref: "",
@@ -44,6 +62,10 @@ function mapStateToProps(state, ownProps) {
     length: "",
     category: ""
   };
+
+  if (courseId && state.courses.length > 0) {
+    course = getCourseById(state.courses, courseId);
+  }
 
   const authors = state.authors.map(author => ({
     value: author.id,
@@ -58,7 +80,12 @@ function mapStateToProps(state, ownProps) {
 
 ManageCourse.propTypes = {
   course: PropTypes.object.isRequired,
-  authors: PropTypes.array.isRequired
+  authors: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired
+};
+
+ManageCourse.contextTypes = {
+  router: PropTypes.object
 };
 
 function mapDispatchToProps(dispatch) {
