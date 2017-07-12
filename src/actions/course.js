@@ -4,7 +4,7 @@ import {
   CREATE_COURSE_SUCCESS
 } from "./types";
 import courseApi from "../api/mockCourseApi";
-import { beginAjaxCall } from "./ajaxStatus";
+import { beginAjaxCall, ajaxCallError } from "./ajaxStatus";
 
 export function loadCoursesSuccess(courses) {
   return {
@@ -50,6 +50,7 @@ export function saveCourse(course) {
           : dispatch(createCourseSuccess(savedCourse));
       })
       .catch(error => {
+        dispatch(ajaxCallError(error));
         throw error;
       });
   };
