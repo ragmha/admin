@@ -8,8 +8,10 @@ import configureStore from "./store/configureStore";
 import routes from "./routes";
 import { loadCourses } from "./actions/course";
 import { loadAuthors } from "./actions/author";
+
 import "./styles/styles.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/toastr/build/toastr.min.css";
 
 const store = configureStore();
 store.dispatch(loadCourses());

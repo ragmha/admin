@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 import TextInput from "../Common/TextInput";
 import SelectInput from "../Common/SelectInput";
 
+
 const CourseForm = ({
   course,
   allAuthors,
