@@ -10,7 +10,8 @@ class ManageCourse extends Component {
 
     this.state = {
       course: Object.assign({}, props.course),
-      errors: {}
+      errors: {},
+      saving: false
     };
 
     this.updateCourseState = this.updateCourseState.bind(this);
@@ -32,6 +33,7 @@ class ManageCourse extends Component {
 
   saveCourse(event) {
     event.preventDefault();
+    this.setState({ saving: true });
     this.props.actions
       .saveCourse(this.state.course)
       .then(() => this.redirect());
@@ -49,6 +51,7 @@ class ManageCourse extends Component {
         onSave={this.saveCourse}
         course={this.state.course}
         errors={this.state.errors}
+        saving={this.state.saving}
       />
     );
   }
