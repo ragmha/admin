@@ -4,6 +4,7 @@ import {
   CREATE_COURSE_SUCCESS
 } from "./types";
 import courseApi from "../api/mockCourseApi";
+import { beginAjaxCall } from "./ajaxStatus";
 
 export function loadCoursesSuccess(courses) {
   return {
@@ -13,13 +14,15 @@ export function loadCoursesSuccess(courses) {
 }
 
 export function loadCourses() {
-  return dispatch =>
-    courseApi
+  return dispatch => {
+    dispatch(beginAjaxCall());
+    return courseApi
       .getAllCourses()
       .then(courses => dispatch(loadCoursesSuccess(courses)))
       .catch(error => {
         throw error;
       });
+  };
 }
 
 export function createCourseSuccess(course) {
@@ -37,7 +40,8 @@ export function updateCourseSuccess(course) {
 }
 
 export function saveCourse(course) {
-  return dispatch =>
+  return dispatch => {
+    dispatch(beginAjaxCall());
     courseApi
       .saveCourse(course)
       .then(savedCourse => {
@@ -48,4 +52,5 @@ export function saveCourse(course) {
       .catch(error => {
         throw error;
       });
+  };
 }
