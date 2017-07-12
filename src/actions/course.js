@@ -42,7 +42,7 @@ export function updateCourseSuccess(course) {
 export function saveCourse(course) {
   return dispatch => {
     dispatch(beginAjaxCall());
-    courseApi
+    return courseApi
       .saveCourse(course)
       .then(savedCourse => {
         course.id
